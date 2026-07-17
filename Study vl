@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPortal - Complete Website</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f0f4f8; color: #333; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ===== HEADER ===== */
+        header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 15px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        header .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 28px; font-weight: 700; letter-spacing: 1px; }
+        .logo span { color: #ffd700; }
+        nav ul { display: flex; list-style: none; gap: 25px; flex-wrap: wrap; }
+        nav ul li a { color: white; font-weight: 600; padding: 8px 12px; border-radius: 5px; transition: 0.3s; font-size: 16px; }
+        nav ul li a:hover, nav ul li a.active { background: rgba(255,255,255,0.2); }
+        .menu-toggle { display: none; font-size: 28px; cursor: pointer; background: none; border: none; color: white; }
+
+        /* ===== HERO ===== */
+        .hero { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 80px 0 60px; text-align: center; }
+        .hero h1 { font-size: 48px; margin-bottom: 15px; }
+        .hero h1 span { color: #ffd700; }
+        .hero p { font-size: 20px; max-width: 700px; margin: 0 auto 30px; opacity: 0.9; }
+        .btn { display: inline-block; padding: 14px 35px; border-radius: 30px; font-weight: 700; transition: 0.3s; border: none; cursor: pointer; font-size: 16px; }
+        .btn-primary { background: #ffd700; color: #1e3c72; }
+        .btn-primary:hover { background: #ffed4a; transform: scale(1.05); }
+        .btn-outline { background: transparent; color: white; border: 2px solid white; }
+        .btn-outline:hover { background: white; color: #1e3c72; }
+        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-whatsapp:hover { background: #128C7E; transform: scale(1.05); }
+        .btn-call { background: #e74c3c; color: white; }
+        .btn-call:hover { background: #c0392b; transform: scale(1.05); }
+        .btn-email { background: #3498db; color: white; }
+        .btn-email:hover { background: #2980b9; transform: scale(1.05); }
+        .hero-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+
+        /* ===== SECTIONS ===== */
+        section { padding: 60px 0; }
+        .section-title { text-align: center; font-size: 36px; margin-bottom: 40px; color: #1e3c72; }
+        .section-title span { color: #2a5298; border-bottom: 4px solid #ffd700; padding-bottom: 8px; }
+
+        /* ===== COURSES ===== */
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        .course-card { background: white; border-radius: 15px; padding: 30px 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: 0.3s; text-align: center; border-top: 5px solid #2a5298; }
+        .course-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .course-card .icon { font-size: 48px; margin-bottom: 15px; }
+        .course-card h3 { font-size: 22px; margin-bottom: 10px; color: #1e3c72; }
+        .course-card p { color: #666; margin-bottom: 15px; }
+
+        /* ===== ABOUT ===== */
+        .about-content { display: flex; gap: 50px; align-items: center; flex-wrap: wrap; }
+        .about-text { flex: 1; }
+        .about-text h2 { font-size: 32px; color: #1e3c72; margin-bottom: 15px; }
+        .about-text p { color: #555; margin-bottom: 15px; font-size: 17px; }
+        .about-image { flex: 1; text-align: center; }
+        .about-image .box { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 60px 30px; border-radius: 15px; font-size: 22px; text-align: center; }
+
+        /* ===== QUIZ ===== */
+        .quiz-box { background: white; max-width: 700px; margin: 0 auto; padding: 40px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .quiz-box .q { font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #1e3c72; }
+        .quiz-box .option { display: block; padding: 12px 18px; background: #f8f9fa; border: 2px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
+        .quiz-box .option:hover { border-color: #2a5298; background: #eef3f9; }
+        .quiz-box .option input[type="radio"] { margin-right: 12px; }
+        .quiz-box .btn { width: 100%; margin-top: 20px; }
+        .quiz-result { text-align: center; padding: 20px; background: #e8f5e9; border-radius: 10px; margin-top: 20px; display: none; }
+        .quiz-result.show { display: block; }
+
+        /* ===== CONTACT ===== */
+        .contact-wrapper { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
+        .contact-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); text-align: center; min-width: 220px; flex: 1; max-width: 300px; transition: 0.3s; }
+        .contact-card:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(0,0,0,0.15); }
+        .contact-card .icon { font-size: 40px; margin-bottom: 10px; }
+        .contact-card h3 { color: #1e3c72; margin-bottom: 8px; }
+        .contact-card p { color: #555; font-size: 14px; word-break: break-all; }
+        .contact-card .btn { margin-top: 12px; padding: 10px 25px; font-size: 14px; display: inline-block; }
+
+        /* ===== FOOTER ===== */
+        footer { background: #1e3c72; color: white; text-align: center; padding: 30px 0; margin-top: 40px; }
+        footer p { opacity: 0.8; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            nav ul { display: none; width: 100%; flex-direction: column; align-items: center; padding: 15px 0; }
+            nav ul.show { display: flex; }
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 17px; }
+            .about-content { flex-direction: column; text-align: center; }
+            .section-title { font-size: 28px; }
+            .quiz-box { padding: 25px; }
+            .contact-wrapper { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 26px; }
+            .container { padding: 0 15px; }
+            .course-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container">
+            <div class="logo">📚 Study<span>Portal</span></div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#quiz">Quiz</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Welcome to <span>StudyPortal</span></h1>
+            <p>Your ultimate platform for online learning, test preparation, and skill development. Join thousands of students achieving their goals.</p>
+            <div class="hero-buttons">
+                <a href="#courses" class="btn btn-primary">Explore Courses</a>
+                <a href="#quiz" class="btn btn-outline">Try Demo Quiz</a>
+                <a href="https://wa.me/923143434951?text=Assalam-o-Alaikum!%20I%20want%20to%20know%20more%20about%20StudyPortal" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+                <a href="tel:+923089453214" class="btn btn-call">📞 Call Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About <span>Us</span></h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Learn, Grow, Succeed</h2>
+                    <p>StudyPortal is a demo educational platform designed to help students prepare for competitive exams, improve their knowledge, and track their progress.</p>
+                    <p>We offer a wide range of courses including Mathematics, English Grammar, General Knowledge, Science, and IQ/Reasoning. Our platform provides interactive quizzes, study materials, and performance analytics.</p>
+                    <p>Whether you're preparing for PPSC, FPSC, NTS, Army, Navy, Air Force, or university exams — we've got you covered!</p>
+                    <a href="#contact" class="btn btn-primary" style="margin-top: 10px;">Contact Us</a>
+                </div>
+                <div class="about-image">
+                    <div class="box">📚 <br> Study <br> Smart <br> 🎯</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COURSES ===== -->
+    <section id="courses" style="background: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title">Our <span>Courses</span></h2>
+            <div class="courses-grid">
+                <div class="course-card"><div class="icon">📐</div><h3>Mathematics</h3><p>Algebra, Geometry, Arithmetic, and advanced topics for competitive exams.</p></div>
+                <div class="course-card"><div class="icon">📝</div><h3>English Grammar</h3><p>Tenses, Parts of Speech, Active/Passive, Synonyms, Antonyms, and more.</p></div>
+                <div class="course-card"><div class="icon">🌍</div><h3>General Knowledge</h3><p>World GK, Pakistan Affairs, Science, Current Affairs, and Islamic Studies.</p></div>
+                <div class="course-card"><div class="icon">🧠</div><h3>IQ & Reasoning</h3><p>Verbal, Non-Verbal, Analytical, and Logical Reasoning for all tests.</p></div>
+                <div class="course-card" style="border-top-color: #ffd700;"><div class="icon">🔬</div><h3>Science</h3><p>Physics, Chemistry, Biology — fundamentals and exam-focused content.</p></div>
+                <div class="course-card" style="border-top-color: #e74c3c;"><div class="icon">💻</div><h3>Computer Basics</h3><p>Hardware, Software, Networking, Internet, and basic programming concepts.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DEMO QUIZ ===== -->
+    <section id="quiz">
+        <div class="container">
+            <h2 class="section-title">Demo <span>Quiz</span></h2>
+            <div class="quiz-box" id="demoQuiz">
+                <div id="quizQuestion">
+                    <div class="q" id="qText">1. What is the capital of Pakistan?</div>
+                    <div id="optionsContainer">
+                        <label class="option"><input type="radio" name="quiz" value="0"> Karachi</label>
+                        <label class="option"><input type="radio" name="quiz" value="1"> Lahore</label>
+                        <label class="option"><input type="radio" name="quiz" value="2"> Islamabad</label>
+                        <label class="option"><input type="radio" name="quiz" value="3"> Rawalpindi</label>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="quizSubmitBtn">Submit Answer</button>
+                <div class="quiz-result" id="quizResult">
+                    <p id="resultMessage"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" style="background: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title">Contact <span>Us</span></h2>
+            <div class="contact-wrapper">
+                <!-- Email -->
+                <div class="contact-card">
+                    <div class="icon">📧</div>
+                    <h3>Email</h3>
+                    <p>fazali78682@gmail.com</p>
+                    <a href="mailto:fazali78682@gmail.com?subject=StudyPortal%20Inquiry&body=Assalam-o-Alaikum!%20I%20want%20to%20know%20more%20about%20your%20courses." class="btn btn-email">Send Email</a>
+                </div>
+                <!-- WhatsApp -->
+                <div class="contact-card">
+                    <div class="icon">💬</div>
+                    <h3>WhatsApp</h3>
+                    <p>0314-3434951</p>
+                    <a href="https://wa.me/923143434951?text=Assalam-o-Alaikum!%20I%20want%20to%20know%20more%20about%20StudyPortal" target="_blank" class="btn btn-whatsapp">Chat on WhatsApp</a>
+                </div>
+                <!-- Call -->
+                <div class="contact-card">
+                    <div class="icon">📞</div>
+                    <h3>Call</h3>
+                    <p>0308-9453214</p>
+                    <a href="tel:+923089453214" class="btn btn-call">Call Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <p>© 2025 <strong>StudyPortal</strong> — Demo Website for Educational Purpose</p>
+            <p style="margin-top: 5px; font-size: 14px; opacity: 0.6;">📧 fazali78682@gmail.com | 📞 0314-3434951 | 0308-9453214</p>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== MOBILE MENU =====
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('show');
+        }
+
+        // ===== DEMO QUIZ =====
+        document.getElementById('quizSubmitBtn').addEventListener('click', function() {
+            const selected = document.querySelector('input[name="quiz"]:checked');
+            const resultDiv = document.getElementById('quizResult');
+            const msg = document.getElementById('resultMessage');
+            
+            if (!selected) {
+                alert('Please select an answer first!');
+                return;
+            }
+            
+            const value = parseInt(selected.value);
+            if (value === 2) {
+                msg.innerHTML = '✅ Correct! Islamabad is the capital of Pakistan.';
+                msg.style.color = '#2ecc71';
+            } else {
+                msg.innerHTML = '❌ Wrong! The correct answer is Islamabad.';
+                msg.style.color = '#e74c3c';
+            }
+            resultDiv.classList.add('show');
+        });
+
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+                document.getElementById('navMenu').classList.remove('show');
+                document.querySelectorAll('nav ul li a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // ===== ACTIVE LINK ON SCROLL =====
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section, .hero');
+            const navLinks = document.querySelectorAll('nav ul li a');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
